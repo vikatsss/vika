@@ -1,0 +1,355 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fce4ec;
+  /* Light pink background */
+  overflow: hidden;
+}
+
+#game-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  background: white;
+}
+
+/* --- Header --- */
+#header {
+  padding: 10px;
+  background: #f8bbd0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid #f48fb1;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cake-display {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  margin: 0 auto;
+}
+
+/* --- Factory Floor --- */
+#factory-floor {
+  flex: 1;
+  background-color: #e0e0e0;
+  /* Grey industrial floor */
+  background-image: repeating-linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd), repeating-linear-gradient(45deg, #ddd 25%, #e0e0e0 25%, #e0e0e0 75%, #ddd 75%, #ddd);
+  background-position: 0 0, 10px 10px;
+  background-size: 20px 20px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  /* Align belt to bottom of floor */
+  padding-bottom: 50px;
+  overflow: hidden;
+}
+
+.machine-head {
+  position: absolute;
+  top: 10px;
+  transform: translateX(-50%);
+  background: #555;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 10;
+}
+
+.machine-head::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 4px;
+  height: 150px;
+  /* Pipe down to belt */
+  background: #777;
+  transform: translateX(-50%);
+  z-index: -1;
+}
+
+#conveyor-belt {
+  width: 100%;
+  height: 20px;
+  background: #333;
+  position: relative;
+  bottom: 20px;
+  border-top: 4px solid #111;
+  border-bottom: 4px solid #111;
+}
+
+/* Moving belt effect */
+#conveyor-belt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(90deg, #444, #444 20px, #222 20px, #222 22px);
+  animation: scrollBelt 1s linear infinite;
+}
+
+@keyframes scrollBelt {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 40px 0;
+  }
+}
+
+/* --- The Cake --- */
+.cake-item {
+  position: absolute;
+  bottom: 25px;
+  /* Sit on top of belt */
+  left: 10%;
+  /* Starting pos */
+  width: 80px;
+  height: 80px;
+  transition: left 0.5s ease-in-out;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+/* Cake Layers and Styling */
+.cake-base {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+/* Shapes */
+.cake-shape-square {
+  clip-path: inset(0 0 0 0);
+  border-radius: 4px;
+}
+
+.cake-shape-circle {
+  clip-path: circle(50% at 50% 50%);
+}
+
+.cake-shape-heart {
+  clip-path: path('M 10,30 A 20,20 0,0,1 50,30 A 20,20 0,0,1 90,30 Q 90,60 50,90 Q 10,60 10,30 z');
+  /* Approximate heart clip-path for 100x100 box, adjusted */
+}
+
+/* Simpler heart using masking or just image, but let's stick to CSS shapes or SVGs if possible. 
+   Let's use a simpler SVG background for complex shapes or just borderRadius for now.
+*/
+
+/* --- Controls Area --- */
+#controls-area {
+  height: 200px;
+  background: #eee;
+  display: flex;
+  overflow-x: auto;
+  border-top: 4px solid #ccc;
+  padding: 10px;
+}
+
+.control-group {
+  flex: 0 0 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
+  border-right: 1px solid #ccc;
+  text-align: center;
+}
+
+.control-group h4 {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+button {
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #ccc;
+  transition: transform 0.1s;
+  font-size: 12px;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:hover {
+  background: #f0f0f0;
+}
+
+.btn-advance {
+  background: #4caf50;
+  color: white;
+  font-weight: bold;
+  height: 100%;
+}
+
+.action-group {
+  flex: 0 0 100px;
+}
+
+/* --- Dynamic Cake Styling --- */
+/* We will inject styles via JS or helper classes */
+.layer-batter {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.layer-icing {
+  width: 100%;
+  height: 40%;
+  top: 0;
+  position: absolute;
+  border-radius: inherit;
+}
+
+.layer-topping {
+  font-size: 30px;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Ensure emojis are always on top and visible */
+  z-index: 20;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+/* --- Notifications --- */
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px 40px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  z-index: 1000;
+  text-align: center;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.notification.hidden {
+  opacity: 0;
+}
+
+/* --- Mobile / Responsive Tweaks --- */
+@media (max-width: 600px) {
+  #game-container {
+    height: 100vh;
+    border: none;
+  }
+
+  /* Header adjustments */
+  #header {
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px;
+  }
+
+  .panel {
+    width: 95%;
+    /* almost full width */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .target-panel h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .cake-display {
+    width: 60px;
+    height: 60px;
+  }
+
+  .stats-panel {
+    font-size: 0.9rem;
+  }
+
+  /* Factory Floor adjustments */
+  #factory-floor {
+    flex: 2;
+    /* give more space to factory */
+    padding-bottom: 20px;
+    /* less padding */
+  }
+
+  .machine-head {
+    font-size: 0.7rem;
+    /* smaller text */
+    padding: 2px 5px;
+    white-space: nowrap;
+  }
+
+  .cake-item {
+    width: 60px;
+    /* smaller cake */
+    height: 60px;
+    bottom: 10px;
+    /* adjust position relative to belt */
+  }
+
+  /* Controls adjustments */
+  #controls-area {
+    height: auto;
+    /* let it grow/shrink */
+    flex-wrap: wrap;
+    /* allow wrapping */
+    gap: 5px;
+    padding: 5px;
+    justify-content: center;
+  }
+
+  .control-group {
+    flex: 1 1 45%;
+    /* 2 per row */
+    min-width: 120px;
+    border: 1px solid #ccc;
+    /* add border since flex might remove spacing visual */
+    border-radius: 5px;
+    background: #fff;
+  }
+
+  .action-group {
+    flex: 1 1 95%;
+    order: 5;
+    /* moving to bottom */
+  }
+
+  button {
+    padding: 12px;
+    /* larger touch target */
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+}

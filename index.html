@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Candy Factory</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="game-container">
+
+    <!-- Header: Target & Score -->
+    <div id="header">
+      <div class="panel target-panel">
+        <h3>Zamówienie</h3>
+        <div id="target-cake" class="cake-display"></div>
+      </div>
+
+      <div class="panel stats-panel">
+        <div>Czas: <span id="timer">60</span>s</div>
+        <div>Wynik: <span id="score">0</span></div>
+        <button id="btn-restart" onclick="startGame()">Nowa Gra</button>
+      </div>
+    </div>
+
+    <!-- Factory Floor (Conveyor Belt) -->
+    <div id="factory-floor">
+      <div class="machine-head" style="left: 10%;">🔻 Kształt</div>
+      <div class="machine-head" style="left: 35%;">🔻 Ciasto</div>
+      <div class="machine-head" style="left: 60%;">🔻 Krem</div>
+      <div class="machine-head" style="left: 85%;">🔻 Posypka</div>
+
+      <div id="conveyor-belt">
+        <!-- The moving cake will be placed here -->
+        <div id="player-cake" class="cake-item"></div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div id="controls-area">
+
+      <!-- Station 1: Shapes -->
+      <div class="control-group" id="ctrl-shape">
+        <h4>1. Kształt</h4>
+        <button onclick="setShape('square')">🟦 Kwadrat</button>
+        <button onclick="setShape('circle')">🔴 Koło</button>
+        <button onclick="setShape('heart')">❤️ Serce</button>
+      </div>
+
+      <!-- Station 2: Batter -->
+      <div class="control-group" id="ctrl-batter">
+        <h4>2. Smak</h4>
+        <button onclick="setBatter('vanilla')" style="background:#f3e5ab">Wanilia</button>
+        <button onclick="setBatter('chocolate')" style="background:#d2691e; color:white;">Czekolada</button>
+        <button onclick="setBatter('strawberry')" style="background:#ffb6c1">Truskawka</button>
+      </div>
+
+      <!-- Station 3: Icing -->
+      <div class="control-group" id="ctrl-icing">
+        <h4>3. Polewa</h4>
+        <button onclick="setIcing('chocolate')">🍫 Czekoladowa</button>
+        <button onclick="setIcing('vanilla')">🍦 Waniliowa</button>
+        <button onclick="setIcing('berry')">🫐 Jagodowa</button>
+      </div>
+
+      <!-- Station 4: Toppings -->
+      <div class="control-group" id="ctrl-topping">
+        <h4>4. Dodatki</h4>
+        <button onclick="setTopping('sprinkles')">🌈 Posypka</button>
+        <button onclick="setTopping('cherry')">🍒 Wiśnia</button>
+        <button onclick="setTopping('candy')">🍬 Cukierki</button>
+      </div>
+
+      <div class="control-group action-group">
+        <h4>Akcja</h4>
+        <button onclick="advanceCake()" class="btn-advance">➡ Przesuń</button>
+      </div>
+
+    </div>
+
+    <!-- Custom Notification Area -->
+    <div id="notification-area" class="notification hidden">
+      <span id="notification-message"></span>
+    </div>
+
+  </div>
+
+  <script src="vika.js"></script>
+</body>
+
+</html>
